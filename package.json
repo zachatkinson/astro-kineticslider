@@ -1,0 +1,17 @@
+{
+  "name": "astro-kineticslider",
+  "version": "1.0.0",
+  "description": "A modernization and upgrade of RGBKineticSlider by @hmongouachon",
+  "main": "src/components/KineticSlider.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.12.7",
+    "pixi-filters": "^6.1.0",
+    "pixi.js": "^8.8.0",
+    "react": "^19.0.0"
+  }
+}
