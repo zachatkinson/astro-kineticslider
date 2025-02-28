@@ -3,7 +3,7 @@
 A responsive, high-performance, interactive image slider component powered by <a href="https://pixijs.com">PixiJS</a> and <a href="https://gsap.com">GSAP</a>. KineticSlider offers smooth transitions, distortion effects, and interactive cursor-based animations.
 KineticSlider is inspired by the awesome work done by <a href="https://github.com/hmongouachon">@hmongouachon</a> on <a href="https://github.com/hmongouachon/rgbKineticSlider">rgbKineticSlider</a>. 
 
-![KineticSlider Demo](https://via.placeholder.com/800x400?text=KineticSlider+Demo)
+![KineticSlider by Creative Branding](public/images/ks_logo.png)
 
 ## Features
 
