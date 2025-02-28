@@ -1,6 +1,7 @@
 # KineticSlider
 
-A responsive, high-performance, interactive image slider component powered by PixiJS and GSAP. KineticSlider offers smooth transitions, distortion effects, and interactive cursor-based animations.
+A responsive, high-performance, interactive image slider component powered by <a href="https://pixijs.com">PixiJS</a> and <a href="https://gsap.com">GSAP</a>. KineticSlider offers smooth transitions, distortion effects, and interactive cursor-based animations.
+KineticSlider is based on the awesome work done by <a href="https://github.com/hmongouachon">@hmongouachon</a> on <a href="https://github.com/hmongouachon/rgbKineticSlider">rgbKineticSlider</a>. This is a port of the original project to React and Astro, while updating the codebases to run on the latest versions and remove legacy and deprecated code.
 
 ![KineticSlider Demo](https://via.placeholder.com/800x400?text=KineticSlider+Demo)
 
@@ -1083,10 +1084,10 @@ Color matrix presets:
 
 KineticSlider works in all modern browsers that support WebGL:
 
-- Chrome
-- Firefox
-- Safari
-- Edge
+- <a href="https://www.google.com/intl/en_ca/chrome/">Chrome</a>
+- <a href="https://www.mozilla.org/en-CA/firefox/new/">Firefox</a>
+- <a href="https://www.apple.com/ca/safari/">Safari</a>
+- <a href="https://www.microsoft.com/en-us/edge/download?form=MA13FJ">Edge</a>
 
 ## License
 
