@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { Container, Sprite } from 'pixi.js';
+import { gsap } from 'gsap';
 import { type FilterConfig } from '../filters/types';
 import { FilterFactory } from '../filters/FilterFactory';
 import { type HookParams } from '../types';
