@@ -1,399 +1,488 @@
-# Astro Kinetic Slider
+# KineticSlider
 
-A modern, high-performance image slider with kinetic effects built for Astro. Leveraging the power of PixiJS v8, GSAP v3, and React v19, this component provides a highly customizable interactive experience with displacement effects, RGB splitting, interactive cursor effects, and more.
+A responsive, high-performance, interactive image slider component powered by PixiJS and GSAP. KineticSlider offers smooth transitions, distortion effects, and interactive cursor-based animations.
 
-This component is a modernized and upgraded version of the RGBKineticSlider by @hmongouachon, rewritten as a TypeScript React component for Astro integration.
+![KineticSlider Demo](https://via.placeholder.com/800x400?text=KineticSlider+Demo)
 
-![Astro Kinetic Slider Demo](https://example.com/demo.gif) <!-- Consider adding a demo GIF here -->
+## Features
 
-## ✨ Features
+- Interactive displacement effects that follow cursor movement
+- Touch and swipe support for mobile devices
+- Smooth GPU-accelerated animations powered by PixiJS
+- Custom text overlays with configurable styling
+- Responsive design that adapts to all screen sizes
+- Filter effects with configurable intensities
+- External navigation support
+- SSR-friendly with loading placeholders
 
-- Smooth transitions with displacement effects
-- RGB splitting and other visual filters
-- Interactive cursor effects
-- Text overlay with title and subtitle
-- Responsive design for desktop and mobile
-- Touch swipe support
-- Mouse drag navigation
-- Keyboard navigation
-- External navigation option
-- Customizable text styling
-- Comprehensive filter system
+## Integration with Astro
 
-## 🚀 Installation
+Since KineticSlider is part of your Astro project, you likely already have it in your src/components directory. If you're setting up a new Astro project, you'll need to ensure you have the required dependencies.
 
-```bash
-# Install the slider and its dependencies
-npm install astro-kineticslider
-```
+### Required Dependencies
 
-Make sure you have the required peer dependencies:
+Make sure you have these dependencies in your Astro project:
 
 ```bash
-npm install gsap@^3.12.7 pixi.js@^8.8.0 pixi-filters@^6.1.0 react@^19.0.0
+npm install pixi.js gsap pixi-filters
+# or
+yarn add pixi.js gsap pixi-filters
 ```
 
-## 📁 Project Structure
+### Astro Configuration
 
-```text
-/
-├── public/
-│   ├── fonts/
-│   │   ├── VAMOS.woff2
-│   ├── images/
-│   │   ├── slides/
-│   │   │   ├── 1.jpg
-│   │   │   ├── 2.jpg
-│   │   │   ├── ...
-│   │   ├── background-displace.jpg
-│   │   └── cursor-displace.png
-├── src/
-│   ├── components/
-│   │   ├── KineticSlider/
-│   │   │   ├── filters/
-│   │   │   │   ├── FilterFactory.ts
-│   │   │   │   └── types.ts
-│   │   │   ├── helpers/
-│   │   │   │   ├── LoadingIndicator.tsx
-│   │   │   │   ├── scalingCalculations.ts
-│   │   │   │   └── slideTransition.ts
-│   │   │   ├── hooks/
-│   │   │   │   ├── useDisplacementEffects.ts
-│   │   │   │   ├── useFilters.ts
-│   │   │   │   ├── useSlides.ts
-│   │   │   │   └── ... (other hooks)
-│   │   │   ├── utils/
-│   │   │   │   ├── assetPreload.ts
-│   │   │   │   ├── calculateSpriteScale.ts
-│   │   │   │   └── fontUtils.ts
-│   │   │   ├── ImportHelpers.ts
-│   │   │   ├── KineticSlider.module.css
-│   │   │   ├── KineticSlider.tsx
-│   │   │   └── types.ts
+Ensure your `astro.config.mjs` includes React integration:
+
+```js
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+
+export default defineConfig({
+  integrations: [react()],
+});
 ```
 
-## 📖 Usage
+### Component Hydration
 
-### Basic Usage
+When using KineticSlider in Astro pages, you must add a client directive to hydrate the component:
 
-```jsx
-import KineticSlider from 'astro-kineticslider';
+```astro
+<KineticSlider
+  images={images}
+  texts={texts}
+  client:load
+/>
+```
 
-// Define your images and text
+The `client:load` directive ensures the component is interactive as soon as possible.
+
+## Basic Usage
+
+### In an Astro Page
+
+```astro
+---
+// src/pages/index.astro
+import KineticSlider from '../components/KineticSlider/KineticSlider';
+
+// Array of image URLs
 const images = [
-  '/images/slides/1.jpg',
-  '/images/slides/2.jpg',
-  '/images/slides/3.jpg'
+  '/images/slide1.jpg',
+  '/images/slide2.jpg',
+  '/images/slide3.jpg',
 ];
 
+// Array of text pairs [title, subtitle]
 const texts = [
-  ['Slide 1', 'Description for slide 1'],
-  ['Slide 2', 'Description for slide 2'],
-  ['Slide 3', 'Description for slide 3']
+  ['Mountain Retreat', 'Experience nature at its finest'],
+  ['Urban Adventure', 'Explore the concrete jungle'],
+  ['Ocean Serenity', 'Relax with the sound of waves'],
 ];
+---
 
-// Use the component
-const MySlider = () => (
-  <KineticSlider
-    images={images}
-    texts={texts}
-    imagesRgbEffect={true}
-    textsRgbEffect={true}
-    cursorImgEffect={true}
-  />
-);
-
-export default MySlider;
+<main>
+  <div style="height: 500px; width: 100%;">
+    <KineticSlider
+      images={images}
+      texts={texts}
+      client:load
+      <!-- Use client:load to ensure the component is hydrated immediately -->
+    />
+  </div>
+</main>
 ```
 
-### Advanced Usage with Custom Filters
+### In a React Component within Astro
 
 ```jsx
-import KineticSlider from 'astro-kineticslider';
+// src/components/SimpleSlider.jsx
+import React from 'react';
+import KineticSlider from './KineticSlider/KineticSlider';
 
-const images = ['/images/slides/1.jpg', '/images/slides/2.jpg'];
+const SimpleSlider = () => {
+  // Array of image URLs
+  const images = [
+    '/images/slide1.jpg',
+    '/images/slide2.jpg',
+    '/images/slide3.jpg',
+  ];
+
+  // Array of text pairs [title, subtitle]
+  const texts = [
+    ['Mountain Retreat', 'Experience nature at its finest'],
+    ['Urban Adventure', 'Explore the concrete jungle'],
+    ['Ocean Serenity', 'Relax with the sound of waves'],
+  ];
+
+  return (
+    <div style={{ height: '500px', width: '100%' }}>
+      <KineticSlider
+        images={images}
+        texts={texts}
+        // Additional options can be specified here
+      />
+    </div>
+  );
+};
+
+export default SimpleSlider;
+```
+
+## Advanced Usage
+
+### In an Astro Page
+
+```astro
+---
+// src/pages/advanced-slider.astro
+import KineticSlider from '../components/KineticSlider/KineticSlider';
+import '../styles/slider-page.css';
+
+const images = [
+  '/images/slide1.jpg',
+  '/images/slide2.jpg',
+  '/images/slide3.jpg',
+];
+
 const texts = [
-  ['Creative', 'Interactive Experience'],
-  ['Modern', 'Web Technology']
+  ['Mountain Retreat', 'Experience nature at its finest'],
+  ['Urban Adventure', 'Explore the concrete jungle'],
+  ['Ocean Serenity', 'Relax with the sound of waves'],
 ];
 
 // Custom filter configurations
 const imageFilters = [
-  {
-    type: 'rgb-split',
-    enabled: true,
-    intensity: 15
-  },
-  {
-    type: 'old-film',
-    enabled: true,
-    intensity: 5,
-    sepia: 0.3,
-    noise: 0.3
-  }
+  { type: 'rgb-split', enabled: true, intensity: 15 },
+  { type: 'bloom', enabled: true, intensity: 8 }
 ];
 
 const textFilters = [
-  {
-    type: 'glow',
-    enabled: true,
-    intensity: 5,
-    color: '#ffffff',
-    outerStrength: 2
-  }
+  { type: 'rgb-split', enabled: true, intensity: 5 }
 ];
+---
 
-const AdvancedSlider = () => (
-  <KineticSlider
-    images={images}
-    texts={texts}
-    imageFilters={imageFilters}
-    textFilters={textFilters}
-    cursorImgEffect={true}
-    cursorTextEffect={true}
-    textTitleFontFamily="VAMOS, sans-serif"
-    backgroundDisplacementSpriteLocation="/images/background-displace.jpg"
-    cursorDisplacementSpriteLocation="/images/cursor-displace.png"
-  />
-);
+<main>
+  <div class="slider-container">
+    <KineticSlider
+      images={images}
+      texts={texts}
+      backgroundDisplacementSpriteLocation="/images/displacement/clouds.jpg"
+      cursorDisplacementSpriteLocation="/images/displacement/ripple.png"
+      cursorImgEffect={true}
+      cursorTextEffect={true}
+      cursorScaleIntensity={0.65}
+      cursorMomentum={0.14}
+      textTitleColor="white"
+      textTitleSize={60}
+      mobileTextTitleSize={40}
+      textTitleLetterspacing={2}
+      textTitleFontFamily="'Georgia', serif"
+      textSubTitleColor="#ccc"
+      textSubTitleSize={22}
+      mobileTextSubTitleSize={16}
+      textSubTitleLetterspacing={1}
+      textSubTitleOffsetTop={15}
+      mobileTextSubTitleOffsetTop={10}
+      textSubTitleFontFamily="'Helvetica', sans-serif"
+      imageFilters={imageFilters}
+      textFilters={textFilters}
+      transitionScaleIntensity={30}
+      swipeScaleIntensity={2}
+      client:load
+    />
+  </div>
+</main>
+
+<style>
+  .slider-container {
+    height: 500px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+</style>
+```
+
+### As a Reusable Component
+
+```jsx
+// src/components/AdvancedSlider.jsx
+import React from 'react';
+import KineticSlider from './KineticSlider/KineticSlider';
+
+const AdvancedSlider = () => {
+  const images = [
+    '/images/slide1.jpg',
+    '/images/slide2.jpg',
+    '/images/slide3.jpg',
+  ];
+
+  const texts = [
+    ['Mountain Retreat', 'Experience nature at its finest'],
+    ['Urban Adventure', 'Explore the concrete jungle'],
+    ['Ocean Serenity', 'Relax with the sound of waves'],
+  ];
+
+  // Custom filter configurations
+  const imageFilters = [
+    { type: 'rgb-split', enabled: true, intensity: 15 },
+    { type: 'bloom', enabled: true, intensity: 8 }
+  ];
+
+  const textFilters = [
+    { type: 'rgb-split', enabled: true, intensity: 5 }
+  ];
+
+  return (
+    <div style={{ height: '500px', width: '100%' }}>
+      <KineticSlider
+        images={images}
+        texts={texts}
+        backgroundDisplacementSpriteLocation="/images/displacement/clouds.jpg"
+        cursorDisplacementSpriteLocation="/images/displacement/ripple.png"
+        cursorImgEffect={true}
+        cursorTextEffect={true}
+        cursorScaleIntensity={0.65}
+        cursorMomentum={0.14}
+        textTitleColor="white"
+        textTitleSize={60}
+        mobileTextTitleSize={40}
+        textTitleLetterspacing={2}
+        textTitleFontFamily="'Georgia', serif"
+        textSubTitleColor="#ccc"
+        textSubTitleSize={22}
+        mobileTextSubTitleSize={16}
+        textSubTitleLetterspacing={1}
+        textSubTitleOffsetTop={15}
+        mobileTextSubTitleOffsetTop={10}
+        textSubTitleFontFamily="'Helvetica', sans-serif"
+        imageFilters={imageFilters}
+        textFilters={textFilters}
+        transitionScaleIntensity={30}
+        swipeScaleIntensity={2}
+      />
+    </div>
+  );
+};
 
 export default AdvancedSlider;
 ```
 
-## 🎛️ Props
+## Using External Navigation
+
+### In an Astro Page
+
+```astro
+---
+// src/pages/slider-with-nav.astro
+import KineticSlider from '../components/KineticSlider/KineticSlider';
+
+const images = [
+  '/images/slide1.jpg',
+  '/images/slide2.jpg',
+  '/images/slide3.jpg',
+];
+
+const texts = [
+  ['Mountain Retreat', 'Experience nature at its finest'],
+  ['Urban Adventure', 'Explore the concrete jungle'],
+  ['Ocean Serenity', 'Relax with the sound of waves'],
+];
+---
+
+<div class="slider-section">
+  <!-- External navigation buttons -->
+  <div class="nav-buttons">
+    <button class="main-nav prev">Previous</button>
+    <button class="main-nav next">Next</button>
+  </div>
+  
+  <!-- Slider with external navigation enabled -->
+  <div class="slider-container">
+    <KineticSlider
+      images={images}
+      texts={texts}
+      externalNav={true}
+      navElement={{ prev: '.main-nav.prev', next: '.main-nav.next' }}
+      client:load
+    />
+  </div>
+</div>
+
+<style>
+  .slider-section {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .slider-container {
+    height: 500px;
+    width: 100%;
+  }
+  
+  .main-nav {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  .main-nav:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+</style>
+```
+
+### As a Reusable Component
+
+```jsx
+// src/components/SliderWithNav.jsx
+import React from 'react';
+import KineticSlider from './KineticSlider/KineticSlider';
+
+const SliderWithExternalNav = () => {
+  const images = [
+    '/images/slide1.jpg',
+    '/images/slide2.jpg',
+    '/images/slide3.jpg',
+  ];
+
+  const texts = [
+    ['Mountain Retreat', 'Experience nature at its finest'],
+    ['Urban Adventure', 'Explore the concrete jungle'],
+    ['Ocean Serenity', 'Relax with the sound of waves'],
+  ];
+
+  return (
+    <div className="slider-with-nav">
+      {/* External navigation buttons */}
+      <div className="nav-container">
+        <button className="main-nav prev">Previous</button>
+        <button className="main-nav next">Next</button>
+      </div>
+      
+      {/* Slider with external navigation enabled */}
+      <div style={{ height: '500px', width: '100%' }}>
+        <KineticSlider
+          images={images}
+          texts={texts}
+          externalNav={true}
+          navElement={{ prev: '.main-nav.prev', next: '.main-nav.next' }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default SliderWithExternalNav;
+```
+
+## API Reference
+
+### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `images` | `string[]` | `[]` | Array of image URLs. |
-| `texts` | `[string, string][]` | `[]` | Array of [title, subtitle] pairs for each slide. |
-| `backgroundDisplacementSpriteLocation` | `string` | `'/images/background-displace.jpg'` | URL for the background displacement map. |
-| `cursorDisplacementSpriteLocation` | `string` | `'/images/cursor-displace.png'` | URL for the cursor displacement map. |
-| `cursorImgEffect` | `boolean` | `true` | Enable cursor displacement effect on images. |
-| `cursorTextEffect` | `boolean` | `true` | Enable cursor effects on text. |
-| `cursorScaleIntensity` | `number` | `0.65` | Scale intensity for cursor displacement. |
-| `cursorMomentum` | `number` | `0.14` | Momentum effect for cursor movement. |
-| `imagesRgbEffect` | `boolean` | `true` | Enable RGB split effect on images. |
-| `imagesRgbIntensity` | `number` | `15` | Intensity of RGB split effect on images. |
-| `textsRgbEffect` | `boolean` | `true` | Enable RGB split effect on texts. |
-| `textsRgbIntensity` | `number` | `5` | Intensity of RGB split effect on texts. |
-| `textTitleColor` | `string` | `'white'` | Color of the title text. |
-| `textTitleSize` | `number` | `64` | Font size for the title. |
-| `mobileTextTitleSize` | `number` | `40` | Font size for the title on mobile. |
-| `textTitleLetterspacing` | `number` | `2` | Letter spacing for the title. |
-| `textTitleFontFamily` | `string` | *system fonts* | Font family for the title. |
-| `textSubTitleColor` | `string` | `'white'` | Color of the subtitle text. |
-| `textSubTitleSize` | `number` | `24` | Font size for the subtitle. |
-| `mobileTextSubTitleSize` | `number` | `18` | Font size for the subtitle on mobile. |
-| `textSubTitleLetterspacing` | `number` | `1` | Letter spacing for the subtitle. |
-| `textSubTitleOffsetTop` | `number` | `10` | Top offset for the subtitle. |
-| `mobileTextSubTitleOffsetTop` | `number` | `5` | Top offset for the subtitle on mobile. |
-| `textSubTitleFontFamily` | `string` | *system fonts* | Font family for the subtitle. |
-| `maxContainerShiftFraction` | `number` | `0.05` | Maximum container shift as a fraction of container size. |
-| `swipeScaleIntensity` | `number` | `2` | Scale intensity for swipe gestures. |
-| `transitionScaleIntensity` | `number` | `30` | Scale intensity for transitions. |
-| `externalNav` | `boolean` | `false` | Use external navigation elements. |
-| `navElement` | `{ prev: string, next: string }` | `{ prev: '.main-nav.prev', next: '.main-nav.next' }` | Selectors for external navigation elements. |
-| `navTextsRgbIntensity` | `number` | `3` | Intensity of RGB split effect on navigation. |
-| `buttonMode` | `boolean` | `false` | Enable button mode for slides. |
-| `imageFilters` | `FilterConfig \| FilterConfig[]` | *none* | Custom filters for images. |
-| `textFilters` | `FilterConfig \| FilterConfig[]` | *none* | Custom filters for text. |
+| `images` | `string[]` | `[]` | Array of image URLs for the slides |
+| `texts` | `[string, string][]` | `[]` | Array of text pairs [title, subtitle] for each slide |
+| `backgroundDisplacementSpriteLocation` | `string` | `'/images/background-displace.jpg'` | URL for the background displacement map texture |
+| `cursorDisplacementSpriteLocation` | `string` | `'/images/cursor-displace.png'` | URL for the cursor displacement map texture |
+| `cursorImgEffect` | `boolean` | `true` | Enable/disable cursor-based image distortion effects |
+| `cursorTextEffect` | `boolean` | `true` | Enable/disable cursor-based text movement effects |
+| `cursorScaleIntensity` | `number` | `0.65` | Scaling factor for cursor displacement effect (0-1) |
+| `cursorMomentum` | `number` | `0.14` | Duration of cursor follow animation in seconds |
+| `textTitleColor` | `string` | `'white'` | Color for slide titles |
+| `textTitleSize` | `number` | `64` | Font size for slide titles on desktop |
+| `mobileTextTitleSize` | `number` | `40` | Font size for slide titles on mobile |
+| `textTitleLetterspacing` | `number` | `2` | Letter spacing for slide titles |
+| `textTitleFontFamily` | `string` | `undefined` | Font family for slide titles (uses system default serif if not specified) |
+| `textSubTitleColor` | `string` | `'white'` | Color for slide subtitles |
+| `textSubTitleSize` | `number` | `24` | Font size for slide subtitles on desktop |
+| `mobileTextSubTitleSize` | `number` | `18` | Font size for slide subtitles on mobile |
+| `textSubTitleLetterspacing` | `number` | `1` | Letter spacing for slide subtitles |
+| `textSubTitleOffsetTop` | `number` | `10` | Vertical offset from title to subtitle on desktop |
+| `mobileTextSubTitleOffsetTop` | `number` | `5` | Vertical offset from title to subtitle on mobile |
+| `textSubTitleFontFamily` | `string` | `undefined` | Font family for slide subtitles (uses system default sans-serif if not specified) |
+| `maxContainerShiftFraction` | `number` | `0.05` | Maximum fraction of container width/height that text can shift on cursor movement |
+| `swipeScaleIntensity` | `number` | `2` | Scaling intensity for swipe gestures |
+| `transitionScaleIntensity` | `number` | `30` | Scaling intensity for slide transitions |
+| `externalNav` | `boolean` | `false` | Enable external navigation elements |
+| `navElement` | `{ prev: string, next: string }` | `{ prev: '.main-nav.prev', next: '.main-nav.next' }` | CSS selectors for external navigation elements |
+| `buttonMode` | `boolean` | `false` | Make text containers clickable (clicking advances to next slide) |
+| `imageFilters` | `FilterConfig \| FilterConfig[]` | `[{ type: 'rgb-split', enabled: true, intensity: 15 }]` | Filter configurations for slide images |
+| `textFilters` | `FilterConfig \| FilterConfig[]` | `[{ type: 'rgb-split', enabled: true, intensity: 5 }]` | Filter configurations for text overlays |
 
-## 🎨 Available Filters
+### Filter Configurations
 
-The Kinetic Slider supports a wide range of filters from PixiJS and pixi-filters. Each filter can be configured with specific options.
+KineticSlider supports a wide range of PixiJS filters that can be applied to both images and text overlays. Each filter is configured with an object containing:
 
-### Filter Configuration
+- `type`: The filter type
+- `enabled`: Boolean indicating if the filter is active
+- `intensity`: Base intensity value (0-100) that controls the filter's strength
+- Additional filter-specific parameters
 
-Each filter requires the following base properties:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `type` | `string` | Filter type identifier. |
-| `enabled` | `boolean` | Whether the filter is active. |
-| `intensity` | `number` | Base intensity of the filter effect. |
-
-### Core Filter Types
-
-Here are some of the most commonly used filters:
-
-#### RGB Split Filter
-```js
-{
-  type: 'rgb-split',
-  enabled: true,
-  intensity: 15,
-  // Optional specific settings:
-  redOffset: { x: 10, y: 0 },
-  greenOffset: { x: 0, y: 0 },
-  blueOffset: { x: -10, y: 0 }
-}
-```
-
-#### Adjustment Filter
-```js
-{
-  type: 'adjustment',
-  enabled: true,
-  intensity: 8,
-  // Optional specific settings:
-  gamma: 1.2,
-  saturation: 1.5,
-  contrast: 1.2,
-  brightness: 1.1,
-  red: 1,
-  green: 1.1,
-  blue: 0.9
-}
-```
-
-#### Bloom Filter
-```js
-{
-  type: 'bloom',
-  enabled: true,
-  intensity: 5,
-  // Optional specific settings:
-  quality: 4,
-  strength: 2
-}
-```
-
-#### Glow Filter
-```js
-{
-  type: 'glow',
-  enabled: true,
-  intensity: 4,
-  // Optional specific settings:
-  outerStrength: 2,
-  innerStrength: 0,
-  color: 0xffffff,
-  quality: 0.1
-}
-```
-
-#### Old Film Filter
-```js
-{
-  type: 'old-film',
-  enabled: true,
-  intensity: 5,
-  // Optional specific settings:
-  sepia: 0.3,
-  noise: 0.3,
-  scratch: 0.5,
-  vignetting: 0.3
-}
-```
-
-### Complete Filter List
-
-| Filter Type | Description | Key Options |
-|-------------|-------------|------------|
-| `rgb-split` | Splits RGB channels | `redOffset`, `greenOffset`, `blueOffset` |
-| `adjustment` | Adjusts various image parameters | `gamma`, `saturation`, `contrast`, `brightness`, `red`, `green`, `blue`, `alpha` |
-| `advanced-bloom` | Enhanced bloom effect | `threshold`, `bloomScale`, `brightness`, `quality` |
-| `ascii` | ASCII art effect | `size`, `color` |
-| `backdrop-blur` | Blurs the background | `quality` |
-| `bevel` | Creates bevel effect | `rotation`, `thickness`, `lightColor`, `shadowColor` |
-| `bloom` | Simple bloom effect | `quality`, `strength` |
-| `bulge-pinch` | Creates bulge or pinch distortion | `radius`, `strength`, `center` |
-| `color-gradient` | Applies color gradient | `gradient`, `alpha` |
-| `color-map` | Maps colors using a reference image | `colorMap`, `nearest` |
-| `color-overlay` | Overlays a color | `color`, `alpha` |
-| `color-replace` | Replaces one color with another | `originalColor`, `newColor`, `epsilon` |
-| `convolution` | Applies convolution matrix | `matrix`, `width`, `height` |
-| `cross-hatch` | Creates crosshatch pattern | *none* |
-| `crt` | CRT monitor effect | `curvature`, `lineWidth`, `lineContrast`, `noise` |
-| `dot` | Creates dot pattern | `scale`, `angle` |
-| `drop-shadow` | Adds drop shadow | `alpha`, `distance`, `blur`, `color` |
-| `emboss` | Emboss effect | `strength` |
-| `glitch` | Glitch effect | `slices`, `offset`, `direction`, `seed` |
-| `glow` | Adds glow effect | `distance`, `outerStrength`, `innerStrength`, `color` |
-| `godray` | God rays effect | `angle`, `gain`, `lacunarity`, `time` |
-| `grayscale` | Converts to grayscale | `amount` |
-| `hsl-adjustment` | HSL color adjustments | `hue`, `saturation`, `lightness` |
-| `kawase-blur` | Kawase blur algorithm | `blur`, `quality`, `clamp` |
-| `motion-blur` | Directional motion blur | `velocity`, `kernelSize` |
-| `old-film` | Old film effect | `sepia`, `noise`, `scratch`, `vignetting` |
-| `outline` | Adds outline | `thickness`, `color`, `quality` |
-| `pixelate` | Pixelation effect | `size` |
-| `radial-blur` | Radial blur effect | `angle`, `center`, `radius` |
-| `reflection` | Reflection effect | `mirror`, `boundary`, `amplitude`, `waveLength` |
-| `shockwave` | Shockwave distortion | `center`, `amplitude`, `wavelength`, `speed` |
-| `simplex-noise` | Simplex noise pattern | `seed`, `scale`, `time` |
-| `tilt-shift` | Tilt-shift effect | `blur`, `gradientBlur`, `start`, `end` |
-| `twist` | Twists the image | `angle`, `radius`, `padding` |
-| `zoom-blur` | Zoom blur effect | `strength`, `center`, `innerRadius` |
-
-## 🔍 Custom Displacement Maps
-
-For the best results, you should use appropriate displacement maps:
-
-1. **Background Displacement Map**: Should be a grayscale image with smooth transitions. The default is `background-displace.jpg`.
-2. **Cursor Displacement Map**: Should be a small grayscale image with radial gradient. The default is `cursor-displace.png`.
-
-You can create your own displacement maps in Photoshop or other image editing software.
-
-## 📱 Mobile Optimization
-
-The slider is built with mobile in mind. It includes:
-
-- Responsive scaling for different screen sizes
-- Touch swipe navigation
-- Optimized text sizes for mobile devices
-- Mobile-specific images support (by providing appropriate image URLs)
-
-## 🔤 Custom Fonts
-
-To use custom fonts, place your font files in the `public/fonts/` directory and reference them in the `textTitleFontFamily` and `textSubTitleFontFamily` props:
+Here's an example configuration with multiple filters:
 
 ```jsx
-<KineticSlider
-  textTitleFontFamily="VAMOS, Helvetica, sans-serif"
-  textSubTitleFontFamily="Georgia, serif"
-  // other props...
-/>
+const imageFilters = [
+    // RGB split effect
+    { type: 'rgb-split', enabled: true, intensity: 15 },
+
+    // Bloom effect for glow
+    { type: 'bloom', enabled: true, intensity: 8, quality: 4 },
+
+    // Color adjustment
+    {
+        type: 'adjustment',
+        enabled: true,
+        intensity: 10,
+        saturation: 1.2,
+        contrast: 1.1,
+        brightness: 1.05
+    }
+];
 ```
 
-The component will attempt to load the fonts automatically.
+#### Supported Filter Types
 
-## 🖥️ External Navigation
+The KineticSlider supports many filter types, including:
 
-You can use external navigation elements by setting `externalNav` to `true` and specifying the selectors in `navElement`:
+- `rgb-split`: Creates RGB color splitting effect
+- `blur`: Applies a Gaussian blur
+- `bloom`: Creates a bloom/glow effect
+- `grayscale`: Converts to grayscale
+- `color-matrix`: Allows color transformations
+- `pixelate`: Creates a pixel art effect
+- `glow`: Adds a glow effect
+- `drop-shadow`: Adds a drop shadow
+- `noise`: Adds noise
+- And many more from the `pixi-filters` library
 
-```jsx
-<KineticSlider
-  externalNav={true}
-  navElement={{ prev: '#prev-button', next: '#next-button' }}
-  // other props...
-/>
-```
+## Performance Considerations
 
-Then add these elements elsewhere in your HTML:
+- Optimize your displacement map textures - smaller textures (512x512 or 1024x1024) with high contrast work best
+- Be mindful of the number of filters used, especially on mobile devices
+- Use appropriately sized images to avoid loading unnecessarily large files
 
-```html
-<button id="prev-button">Previous</button>
-<button id="next-button">Next</button>
-```
+## Browser Support
 
-## 🤝 Contributing
+KineticSlider works in all modern browsers that support WebGL:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- Chrome
+- Firefox
+- Safari
+- Edge
 
-## 📄 License
+## License
 
-ISC License
-
-## 🙏 Acknowledgements
-
-This component is a modernization and upgrade of the original [RGBKineticSlider](https://github.com/hmongouachon/rgbKineticSlider) by @hmongouachon.
-
-## 📚 Further Documentation
-
-For more details on the underlying technologies:
-
-- [PixiJS Documentation](https://pixijs.com/guides)
-- [GSAP Documentation](https://greensock.com/docs/)
-- [Astro Documentation](https://docs.astro.build)
-- [pixi-filters Documentation](https://github.com/pixijs/pixi-filters)
+MIT
