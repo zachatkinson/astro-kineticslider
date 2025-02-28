@@ -38,7 +38,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  integrations: [react()],
+    integrations: [react()],
 });
 ```
 
@@ -100,29 +100,29 @@ import React from 'react';
 import KineticSlider from './KineticSlider/KineticSlider';
 
 const SimpleSlider = () => {
-  // Array of image URLs
-  const images = [
-    '/images/slide1.jpg',
-    '/images/slide2.jpg',
-    '/images/slide3.jpg',
-  ];
+    // Array of image URLs
+    const images = [
+        '/images/slide1.jpg',
+        '/images/slide2.jpg',
+        '/images/slide3.jpg',
+    ];
 
-  // Array of text pairs [title, subtitle]
-  const texts = [
-    ['Mountain Retreat', 'Experience nature at its finest'],
-    ['Urban Adventure', 'Explore the concrete jungle'],
-    ['Ocean Serenity', 'Relax with the sound of waves'],
-  ];
+    // Array of text pairs [title, subtitle]
+    const texts = [
+        ['Mountain Retreat', 'Experience nature at its finest'],
+        ['Urban Adventure', 'Explore the concrete jungle'],
+        ['Ocean Serenity', 'Relax with the sound of waves'],
+    ];
 
-  return (
-    <div style={{ height: '500px', width: '100%' }}>
-      <KineticSlider
-        images={images}
-        texts={texts}
-        // Additional options can be specified here
-      />
-    </div>
-  );
+    return (
+        <div style={{ height: '500px', width: '100%' }}>
+            <KineticSlider
+                images={images}
+                texts={texts}
+                // Additional options can be specified here
+            />
+        </div>
+    );
 };
 
 export default SimpleSlider;
@@ -211,58 +211,58 @@ import React from 'react';
 import KineticSlider from './KineticSlider/KineticSlider';
 
 const AdvancedSlider = () => {
-  const images = [
-    '/images/slide1.jpg',
-    '/images/slide2.jpg',
-    '/images/slide3.jpg',
-  ];
+    const images = [
+        '/images/slide1.jpg',
+        '/images/slide2.jpg',
+        '/images/slide3.jpg',
+    ];
 
-  const texts = [
-    ['Mountain Retreat', 'Experience nature at its finest'],
-    ['Urban Adventure', 'Explore the concrete jungle'],
-    ['Ocean Serenity', 'Relax with the sound of waves'],
-  ];
+    const texts = [
+        ['Mountain Retreat', 'Experience nature at its finest'],
+        ['Urban Adventure', 'Explore the concrete jungle'],
+        ['Ocean Serenity', 'Relax with the sound of waves'],
+    ];
 
-  // Custom filter configurations
-  const imageFilters = [
-    { type: 'rgb-split', enabled: true, intensity: 15 },
-    { type: 'bloom', enabled: true, intensity: 8 }
-  ];
+    // Custom filter configurations
+    const imageFilters = [
+        { type: 'rgb-split', enabled: true, intensity: 15 },
+        { type: 'bloom', enabled: true, intensity: 8 }
+    ];
 
-  const textFilters = [
-    { type: 'rgb-split', enabled: true, intensity: 5 }
-  ];
+    const textFilters = [
+        { type: 'rgb-split', enabled: true, intensity: 5 }
+    ];
 
-  return (
-    <div style={{ height: '500px', width: '100%' }}>
-      <KineticSlider
-        images={images}
-        texts={texts}
-        backgroundDisplacementSpriteLocation="/images/displacement/clouds.jpg"
-        cursorDisplacementSpriteLocation="/images/displacement/ripple.png"
-        cursorImgEffect={true}
-        cursorTextEffect={true}
-        cursorScaleIntensity={0.65}
-        cursorMomentum={0.14}
-        textTitleColor="white"
-        textTitleSize={60}
-        mobileTextTitleSize={40}
-        textTitleLetterspacing={2}
-        textTitleFontFamily="'Georgia', serif"
-        textSubTitleColor="#ccc"
-        textSubTitleSize={22}
-        mobileTextSubTitleSize={16}
-        textSubTitleLetterspacing={1}
-        textSubTitleOffsetTop={15}
-        mobileTextSubTitleOffsetTop={10}
-        textSubTitleFontFamily="'Helvetica', sans-serif"
-        imageFilters={imageFilters}
-        textFilters={textFilters}
-        transitionScaleIntensity={30}
-        swipeScaleIntensity={2}
-      />
-    </div>
-  );
+    return (
+        <div style={{ height: '500px', width: '100%' }}>
+            <KineticSlider
+                images={images}
+                texts={texts}
+                backgroundDisplacementSpriteLocation="/images/displacement/clouds.jpg"
+                cursorDisplacementSpriteLocation="/images/displacement/ripple.png"
+                cursorImgEffect={true}
+                cursorTextEffect={true}
+                cursorScaleIntensity={0.65}
+                cursorMomentum={0.14}
+                textTitleColor="white"
+                textTitleSize={60}
+                mobileTextTitleSize={40}
+                textTitleLetterspacing={2}
+                textTitleFontFamily="'Georgia', serif"
+                textSubTitleColor="#ccc"
+                textSubTitleSize={22}
+                mobileTextSubTitleSize={16}
+                textSubTitleLetterspacing={1}
+                textSubTitleOffsetTop={15}
+                mobileTextSubTitleOffsetTop={10}
+                textSubTitleFontFamily="'Helvetica', sans-serif"
+                imageFilters={imageFilters}
+                textFilters={textFilters}
+                transitionScaleIntensity={30}
+                swipeScaleIntensity={2}
+            />
+        </div>
+    );
 };
 
 export default AdvancedSlider;
@@ -351,37 +351,37 @@ import React from 'react';
 import KineticSlider from './KineticSlider/KineticSlider';
 
 const SliderWithExternalNav = () => {
-  const images = [
-    '/images/slide1.jpg',
-    '/images/slide2.jpg',
-    '/images/slide3.jpg',
-  ];
+    const images = [
+        '/images/slide1.jpg',
+        '/images/slide2.jpg',
+        '/images/slide3.jpg',
+    ];
 
-  const texts = [
-    ['Mountain Retreat', 'Experience nature at its finest'],
-    ['Urban Adventure', 'Explore the concrete jungle'],
-    ['Ocean Serenity', 'Relax with the sound of waves'],
-  ];
+    const texts = [
+        ['Mountain Retreat', 'Experience nature at its finest'],
+        ['Urban Adventure', 'Explore the concrete jungle'],
+        ['Ocean Serenity', 'Relax with the sound of waves'],
+    ];
 
-  return (
-    <div className="slider-with-nav">
-      {/* External navigation buttons */}
-      <div className="nav-container">
-        <button className="main-nav prev">Previous</button>
-        <button className="main-nav next">Next</button>
-      </div>
-      
-      {/* Slider with external navigation enabled */}
-      <div style={{ height: '500px', width: '100%' }}>
-        <KineticSlider
-          images={images}
-          texts={texts}
-          externalNav={true}
-          navElement={{ prev: '.main-nav.prev', next: '.main-nav.next' }}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <div className="slider-with-nav">
+            {/* External navigation buttons */}
+            <div className="nav-container">
+                <button className="main-nav prev">Previous</button>
+                <button className="main-nav next">Next</button>
+            </div>
+
+            {/* Slider with external navigation enabled */}
+            <div style={{ height: '500px', width: '100%' }}>
+                <KineticSlider
+                    images={images}
+                    texts={texts}
+                    externalNav={true}
+                    navElement={{ prev: '.main-nav.prev', next: '.main-nav.next' }}
+                />
+            </div>
+        </div>
+    );
 };
 
 export default SliderWithExternalNav;
@@ -455,18 +455,56 @@ const imageFilters = [
 
 #### Supported Filter Types
 
-The KineticSlider supports many filter types, including:
+The KineticSlider supports the following filter types:
 
+##### PIXI Filters (from pixi-filters library)
 - `rgb-split`: Creates RGB color splitting effect
-- `blur`: Applies a Gaussian blur
+- `adjustment`: Adjust gamma, saturation, contrast, brightness and color channels
+- `advanced-bloom`: Enhanced bloom/glow effect with more control
+- `ascii`: Renders the image as ASCII characters
+- `backdrop-blur`: Blur effect applied to the background
+- `bevel`: Creates a beveled edge effect
 - `bloom`: Creates a bloom/glow effect
-- `grayscale`: Converts to grayscale
-- `color-matrix`: Allows color transformations
-- `pixelate`: Creates a pixel art effect
-- `glow`: Adds a glow effect
+- `bulge-pinch`: Creates a bulge or pinch distortion
+- `color-gradient`: Applies a color gradient overlay
+- `color-map`: Maps colors using a reference texture
+- `color-overlay`: Applies a solid color overlay
+- `color-replace`: Replaces one color with another
+- `convolution`: Applies a convolution matrix filter
+- `cross-hatch`: Creates a cross-hatching effect
+- `crt`: Simulates a CRT (old TV) display
+- `dot`: Creates a dot-screen effect
 - `drop-shadow`: Adds a drop shadow
-- `noise`: Adds noise
-- And many more from the `pixi-filters` library
+- `emboss`: Creates an embossed effect
+- `glitch`: Simulates digital glitch artifacts
+- `glow`: Adds a glow effect
+- `godray`: Creates light ray effects
+- `grayscale`: Converts to grayscale
+- `hsl-adjustment`: Adjust hue, saturation, and lightness
+- `kawase-blur`: Alternative blur algorithm
+- `motion-blur`: Creates motion blur effect
+- `multi-color-replace`: Replaces multiple colors at once
+- `old-film`: Simulates old film grain and artifacts
+- `outline`: Creates an outline effect
+- `pixelate`: Creates a pixel art effect
+- `radial-blur`: Applies a radial blur
+- `reflection`: Creates a reflection effect
+- `shockwave`: Simulates a shockwave distortion
+- `simple-lightmap`: Applies a simple light map
+- `simplex-noise`: Generates simplex noise pattern
+- `tilt-shift`: Creates a tilt-shift photography effect
+- `twist`: Applies a twist distortion
+- `zoom-blur`: Creates a zoom blur effect
+
+##### Built-in PIXI Filters
+- `alpha`: Controls transparency
+- `blur`: Applies a Gaussian blur
+- `color-matrix`: Allows matrix-based color transformations
+- `displacement`: Creates displacement mapping effects
+- `noise`: Adds random noise
+
+##### Custom Filters
+- `custom`: Allows implementing your own custom filter logic
 
 ## Performance Considerations
 
